@@ -22,8 +22,8 @@
     <div class="container">
       <nav class="nav">
         <div class="brand">
-          <span class="brand-mark" aria-hidden="true">R</span>
-          <span class="brand-name">5dAcademy College Planning</span>
+          <span class="brand-mark" aria-hidden="true">5D</span>
+          <span class="brand-name">5Dacademy</span>
         </div>
 
         <a class="button button-ghost" href="#download">Get the Spreadsheet</a>
@@ -46,18 +46,39 @@
             <li><strong>Loan repayment safety net</strong> (income-driven repayment overview)</li>
           </ul>
 
-          <div class="cta-row">
-            <!-- Replace the # with your actual file link once uploaded -->
-            <a class="button button-primary" id="download" href="College-Money-Links-Spreadsheet.xlsx" download>
-              Download the Spreadsheet (Free)
-            </a>
-            <a class="button button-secondary" href="#how-to-use">
-              How to Use It
-            </a>
+          <!-- EMAIL GATE -->
+          <div class="signup" id="download">
+            <h2 class="signup-title">Get the spreadsheet instantly</h2>
+            <p class="muted signup-subtitle">
+              Enter your email and we’ll start the download. (No spam—unsubscribe anytime.)
+            </p>
+
+            <form id="emailForm" class="signup-form" novalidate>
+              <label class="sr-only" for="email">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                placeholder="you@email.com"
+                required
+              />
+              <button class="button button-primary" type="submit">
+                Send & Download
+              </button>
+            </form>
+
+            <p id="formMsg" class="micro" aria-live="polite"></p>
+
+            <p class="micro">
+              Prefer not to share your email?
+              <a class="inline-link" href="#faq">See FAQ</a>.
+            </p>
           </div>
 
-          <p class="micro">
-            No jargon. Just trusted links, organized with action steps. Takes ~10 minutes to review and start using.
+          <p class="micro" style="margin-top:12px;">
+            Tip: After downloading, print the “Start Here” tab as a one-page checklist.
           </p>
         </div>
 
@@ -129,53 +150,17 @@
       </div>
     </section>
 
-    <section class="section section-alt" id="what-inside">
-      <div class="container">
-        <h2>What’s inside</h2>
-
-        <div class="two-col">
-          <div>
-            <ul class="checklist">
-              <li><strong>Clear categories</strong> so you’re not hunting across 20 browser tabs</li>
-              <li><strong>Plain-English descriptions</strong> (no confusing acronyms without explanations)</li>
-              <li><strong>Action items</strong> telling you exactly what to do with each link</li>
-              <li><strong>Trustworthy sources</strong> (official and well-known orgs)</li>
-            </ul>
-          </div>
-
-          <div class="callout">
-            <h3>Want the “deadline tracker” version too?</h3>
-            <p>
-              If you’d like, I can generate a companion sheet that lets parents track each college’s
-              FAFSA/CSS/Profile/IDOC and state-aid deadlines in one place.
-            </p>
-            <a class="button button-secondary" href="#download">Yes—send me the tracker template</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="trust">
-      <div class="container">
-        <h2>Sources referenced in the spreadsheet</h2>
-        <p class="muted">
-          The spreadsheet points families to high-quality resources including StudentAid.gov, NASFAA (state aid and tuition exchanges),
-          College Board (CSS Profile participants and CLEP policy search), FHFA (home price index planning tool), and more.
-        </p>
-
-        <div class="chips" aria-label="Source chips">
-          <span class="chip">StudentAid.gov</span>
-          <span class="chip">NASFAA</span>
-          <span class="chip">College Board</span>
-          <span class="chip">FHFA</span>
-          <span class="chip">Employer tuition benefits</span>
-        </div>
-      </div>
-    </section>
-
     <section class="section section-alt" id="faq">
       <div class="container">
         <h2>FAQ</h2>
+
+        <details class="faq">
+          <summary>Where does my email go?</summary>
+          <p>
+            Right now, this demo page only saves it in your browser for testing and then starts the download.
+            To actually collect emails, connect the form to a service like Mailchimp/ConvertKit (I can wire it up if you tell me which one).
+          </p>
+        </details>
 
         <details class="faq">
           <summary>Is this personalized financial advice?</summary>
@@ -186,14 +171,9 @@
         </details>
 
         <details class="faq">
-          <summary>Does downloading this cost anything?</summary>
-          <p>No—this spreadsheet is free.</p>
-        </details>
-
-        <details class="faq">
-          <summary>How do I share this with my spouse or student?</summary>
+          <summary>Can I download without email?</summary>
           <p>
-            Download it and upload it to Google Drive/Dropbox, or email it. You can also print the “Start Here” tab as a one-page checklist.
+            If you want that option, you can add a “Direct download” link in the footer. (Tell me and I’ll add it.)
           </p>
         </details>
       </div>
@@ -204,24 +184,116 @@
     <div class="container footer-inner">
       <div>
         <div class="brand footer-brand">
-          <span class="brand-mark" aria-hidden="true">R</span>
-          <span class="brand-name">5dAcademy College Planning</span>
+          <span class="brand-mark" aria-hidden="true">5D</span>
+          <span class="brand-name">5Dacademy</span>
         </div>
         <p class="muted small">
-          © <span id="year"></span> 5dAcademy College Planning. Educational content only.
+          © <span id="year"></span> 5Dacademy. Educational content only.
         </p>
       </div>
 
       <div class="footer-links">
         <a href="#download">Download</a>
         <a href="#faq">FAQ</a>
-        <a href="#trust">Sources</a>
       </div>
     </div>
   </footer>
 
   <script>
+    // ====== CONFIG: set your file name here ======
+    const SPREADSHEET_FILE = "YOUR_SPREADSHEET_FILENAME.xlsx"; // e.g., "College-Money-Links-Spreadsheet.xlsx"
+
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const form = document.getElementById("emailForm");
+    const emailInput = document.getElementById("email");
+    const msg = document.getElementById("formMsg");
+
+    function isValidEmail(email){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
+    }
+
+    function startDownload(){
+      const a = document.createElement("a");
+      a.href = SPREADSHEET_FILE;
+      a.download = "";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      msg.textContent = "";
+
+      const email = emailInput.value.trim();
+
+      if(!isValidEmail(email)){
+        msg.textContent = "Please enter a valid email address (example: name@email.com).";
+        return;
+      }
+
+      // Demo-only local storage (does not send you the email)
+      const leads = JSON.parse(localStorage.getItem("leadEmails") || "[]");
+      leads.push({ email, ts: new Date().toISOString() });
+      localStorage.setItem("leadEmails", JSON.stringify(leads));
+
+      msg.textContent = "Thanks! Starting your download now…";
+
+      setTimeout(() => startDownload(), 350);
+      emailInput.value = "";
+    });
   </script>
+
+  <style>
+    .signup{
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(234,240,255,.14);
+      background: rgba(255,255,255,.03);
+    }
+    .signup-title{
+      margin: 0 0 6px;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+    }
+    .signup-subtitle{ margin: 0 0 12px; }
+    .signup-form{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .signup-form input{
+      flex: 1 1 240px;
+      min-width: 220px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(234,240,255,.18);
+      background: rgba(16,29,58,.35);
+      color: var(--text);
+      outline: none;
+    }
+    .signup-form input::placeholder{ color: rgba(234,240,255,.55); }
+    .inline-link{
+      color: rgba(234,240,255,.85);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(234,240,255,.35);
+    }
+    .inline-link:hover{ color: var(--text); }
+    .sr-only{
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </body>
 </html>
